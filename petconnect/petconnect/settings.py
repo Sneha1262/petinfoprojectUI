@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'corsheaders',
+    'petconnect',
 ]
 
 MIDDLEWARE = [
