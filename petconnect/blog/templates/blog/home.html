@@ -5,16 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PetInfoBlog</title>
   <style>
+    /* General Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
+    /* Body Styling */
     body {
       font-family: "Times New Roman", Times, serif;
       background-color: #e7e2e2;
       color: #333;
     }
+
+    /* Navbar Styling */
     .navbar {
       display: flex;
       align-items: center;
@@ -23,33 +28,35 @@
       padding: 10px 20px;
       color: #fff;
     }
+
     .nav-left {
       display: flex;
       align-items: center;
     }
+
     .logo {
       font-size: 1.5rem;
       margin-right: 20px;
     }
+
     .hamburger {
       display: none;
       font-size: 1.5rem;
       cursor: pointer;
     }
+
     @media (max-width: 768px) {
       .hamburger {
         display: block;
       }
     }
-    main {
-      width: 90%;
-      max-width: 1200px;
-      margin: 20px auto;
-    }
+
+    /* Main Feature Section */
     .feature-section {
       text-align: center;
       margin: 50px auto;
     }
+
     .feature-buttons {
       display: flex;
       justify-content: center;
@@ -57,6 +64,7 @@
       flex-wrap: wrap;
       margin-top: 20px;
     }
+
     .primary-btn {
       padding: 12px 24px;
       font-size: 16px;
@@ -67,9 +75,12 @@
       cursor: pointer;
       transition: background 0.3s;
     }
+
     .primary-btn:hover {
       background-color: #1b2b3a;
     }
+
+    /* Card Layout */
     .card-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -77,22 +88,7 @@
       margin: 20px auto;
       padding: 0 20px;
     }
-    .weather-card {
-      margin: 20px auto;
-      max-width: 600px;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      color: #2c3e50;
-      font-family: 'Segoe UI', sans-serif;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+
     .pet-card {
       background-color: #fff;
       border-radius: 8px;
@@ -101,18 +97,23 @@
       text-align: center;
       transition: transform 0.2s;
     }
+
     .pet-card:hover {
       transform: scale(1.02);
     }
+
     .pet-card h3 {
       color: #2c3e50;
       font-size: 1.2rem;
     }
+
     .pet-card .date {
       font-size: 0.9rem;
       color: #888;
       margin-bottom: 10px;
     }
+
+    /* Quote Section Styling */
     .quote-section {
       margin: 60px auto;
       text-align: center;
@@ -122,22 +123,22 @@
       box-shadow: 0 6px 12px rgba(0,0,0,0.1);
       max-width: 700px;
     }
+
     .quote-section blockquote {
       font-size: 1.3rem;
       font-style: italic;
       color: #444;
       line-height: 1.6;
     }
+
     .quote-section cite {
       display: block;
       margin-top: 10px;
       font-size: 1rem;
       color: #666;
     }
-    .product img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
+
+    /* Button Styling for Pet Cards */
     .editPetButton, .deletePetButton {
       margin: 8px 5px 0 5px;
       padding: 6px 12px;
@@ -146,22 +147,38 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .editPetButton {
       background-color: #007bff;
       color: white;
     }
+
     .deletePetButton {
       background-color: #dc3545;
       color: white;
     }
+
+    /* Edit Modal Styling */
+    #editModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #editModal form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+    }
   </style>
 </head>
 <body>
-
-  <noscript>
-    <p style="color: red; text-align: center;">JavaScript is required to use this website's features. Please enable it in your browser.</p>
-  </noscript>
-
   <header class="navbar">
     <div class="nav-left">
       <h1 class="logo">Pet Information Blog</h1>
@@ -170,9 +187,7 @@
   </header>
 
   <section class="quote-section">
-    <blockquote>
-      "Pets are humanizing. They remind us we have an obligation and responsibility to preserve and nurture and care for all life."
-    </blockquote>
+    <blockquote>"Pets are humanizing. They remind us we have an obligation and responsibility to preserve and nurture and care for all life."</blockquote>
     <cite>- James Cromwell</cite>
   </section>
 
@@ -185,111 +200,37 @@
     </div>
   </section>
 
+  <!-- Card Containers -->
   <div id="petCardsContainer" class="card-container"></div>
   <div id="weather-info"></div>
   <div id="products-container" class="card-container"></div>
 
+  <!-- Edit Modal -->
+  <div id="editModal">
+    <form id="editPetForm">
+      <input type="hidden" id="editPetId">
+      <label>Name:</label><br>
+      <input type="text" id="editPetName"><br>
+      <label>Type:</label><br>
+      <input type="text" id="editPetType"><br>
+      <label>Breed:</label><br>
+      <input type="text" id="editPetBreed"><br>
+      <label>Age:</label><br>
+      <input type="number" id="editPetAge"><br>
+      <label>Description:</label><br>
+      <textarea id="editPetDesc"></textarea><br><br>
+      <button type="submit">Save</button>
+      <button type="button" onclick="closeEditModal()">Cancel</button>
+    </form>
+  </div>
+
   <script>
-    const hamburger = document.getElementById('hamburger');
-    hamburger.addEventListener('click', () => {
+    // Hamburger Alert
+    document.getElementById('hamburger').addEventListener('click', () => {
       alert('Menu clicked! You can add mobile nav functionality here.');
     });
 
-    const productsContainer = document.getElementById('products-container');
-
-    let petDataLoaded = false;
-    let petCardsVisible = false;
-
-    document.getElementById('loadPetInfoBtn').addEventListener('click', function () {
-      const container = document.getElementById('petCardsContainer');
-      const button = document.getElementById('loadPetInfoBtn');
-
-      if (petCardsVisible) {
-        container.innerHTML = "";
-        button.textContent = "Show Pet Info";
-        petCardsVisible = false;
-        return;
-      }
-
-      fetch('http://35.173.214.218:8000/api/pets/')
-        .then(response => response.json())
-        .then(data => {
-          if (data.length === 0) {
-            container.innerHTML = "<p>No pet data available.</p>";
-            return;
-          }
-
-          container.innerHTML = '';
-          data.forEach(pet => {
-            const card = document.createElement('div');
-            card.classList.add('pet-card');
-
-            const createdDate = new Date(pet.created_at).toLocaleDateString('en-US', {
-              year: 'numeric', month: 'long', day: 'numeric'
-            });
-
-            card.innerHTML = `
-              <h3>${pet.name} (${pet.pet_type})</h3>
-              <div class="date">${createdDate}</div>
-              <p><strong>Breed:</strong> ${pet.breed || 'Not specified'}</p>
-              <p><strong>Age:</strong> ${pet.age} years</p>
-              <p>${pet.description}</p>
-              <button class="editPetButton" data-id="${pet.id}">Edit</button>
-              <button class="deletePetButton" data-id="${pet.id}">Delete</button>
-            `;
-            container.appendChild(card);
-          });
-
-          // Add edit and delete functionality
-          document.querySelectorAll('.editPetButton').forEach(button => {
-            button.addEventListener('click', function (event) {
-              const petId = event.target.getAttribute('data-id');
-              editPet(petId);
-            });
-          });
-
-          document.querySelectorAll('.deletePetButton').forEach(button => {
-            button.addEventListener('click', function (event) {
-              const petId = event.target.getAttribute('data-id');
-              if (confirm("Are you sure you want to delete this pet?")) {
-                deletePet(petId);
-              }
-            });
-          });
-
-          petDataLoaded = true;
-          petCardsVisible = true;
-          button.textContent = "Hide Pet Info";
-        })
-        .catch(error => {
-          console.error("Error fetching pets:", error);
-          container.innerHTML = "<p>Error loading pet info.</p>";
-        });
-    });
-
-    function editPet(id) {
-      alert(`Edit pet with ID: ${id}`);
-      // In the future, open a modal here to edit pet data.
-    }
-
-    function deletePet(id) {
-      fetch(`http://35.173.214.218:8000/api/pets/${id}/`, {
-        method: 'DELETE'
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("Pet deleted successfully.");
-          document.getElementById('loadPetInfoBtn').click();
-        } else {
-          alert("Failed to delete pet.");
-        }
-      })
-      .catch(error => {
-        console.error("Error deleting pet:", error);
-        alert("Something went wrong.");
-      });
-    }
-
+    // Weather Toggle & Fetching
     const weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=53.3498&longitude=-6.2603&current_weather=true";
     const weatherBtn = document.getElementById('weather-btn');
     const weatherInfo = document.getElementById('weather-info');
@@ -297,9 +238,9 @@
 
     function getWeatherSuggestion(code) {
       if (code === 0) return "Clear sky! Perfect day for a walk with your pet.";
-      if (code >= 1 && code <= 3) return "Mostly clear. Bring a light jacket for your pet walk.";
+      if (code >= 1 && code <= 3) return "Mostly clear. Bring a light jacket.";
       if (code >= 45 && code <= 67) return "Foggy or misty. Caution advised.";
-      if (code >= 61 && code <= 82) return "Rain expected. Keep pets dry and cozy.";
+      if (code >= 61 && code <= 82) return "Rain expected. Keep pets dry.";
       if (code >= 95) return "Severe weather! Keep pets indoors.";
       return "Weather seems normal. Enjoy your time with your pet!";
     }
@@ -323,34 +264,118 @@
       }
 
       try {
-        weatherInfo.innerHTML = "Loading weather data...";
-        const response = await fetch(weatherUrl);
-        if (!response.ok) throw new Error(`Error: ${response.status}`);
-
-        const data = await response.json();
-        const currentWeather = data.current_weather;
-        const temperature = currentWeather.temperature;
-        const code = currentWeather.weathercode;
-
+        const res = await fetch(weatherUrl);
+        const data = await res.json();
+        const temp = data.current_weather.temperature;
+        const code = data.current_weather.weathercode;
         const emoji = getWeatherEmoji(code);
         const suggestion = getWeatherSuggestion(code);
 
-        weatherInfo.innerHTML = `
-          <div class="weather-card">
-            <h3>${emoji} Current Weather in Dublin</h3>
-            <p><strong>Temperature:</strong> ${temperature}°C</p>
-            <p>${suggestion}</p>
-          </div>
-        `;
+        weatherInfo.innerHTML = `<div class='weather-card'><h3>${emoji} Current Weather</h3><p><strong>Temp:</strong> ${temp}°C</p><p>${suggestion}</p></div>`;
         weatherBtn.textContent = "Hide Weather";
         weatherVisible = true;
-      } catch (error) {
-        console.error("Error fetching weather:", error);
-        weatherInfo.innerHTML = "<p style='color:red;'>Unable to retrieve weather data.</p>";
+      } catch (err) {
+        weatherInfo.innerHTML = `<p style='color:red;'>Error loading weather</p>`;
       }
     }
-
     weatherBtn.addEventListener('click', checkWeather);
+
+    // Load Pet Info
+    let petVisible = false;
+    document.getElementById('loadPetInfoBtn').addEventListener('click', () => {
+      const container = document.getElementById('petCardsContainer');
+      if (petVisible) {
+        container.innerHTML = "";
+        petVisible = false;
+        return;
+      }
+
+      fetch('http://35.173.214.218:8000/api/pets/')
+        .then(response => response.json())
+        .then(data => {
+          container.innerHTML = '';
+          data.forEach(pet => {
+            const card = document.createElement('div');
+            card.classList.add('pet-card');
+            const date = new Date(pet.created_at).toLocaleDateString();
+            card.innerHTML = `
+              <h3>${pet.name} (${pet.pet_type})</h3>
+              <div class="date">${date}</div>
+              <p><strong>Breed:</strong> ${pet.breed}</p>
+              <p><strong>Age:</strong> ${pet.age}</p>
+              <p>${pet.description}</p>
+              <button class="editPetButton" onclick="editPet(${pet.id})">Edit</button>
+              <button class="deletePetButton" onclick="deletePet(${pet.id})">Delete</button>
+            `;
+            container.appendChild(card);
+          });
+          petVisible = true;
+        });
+    });
+
+    // Edit Pet (opens modal with form filled)
+    function editPet(id) {
+      fetch(`http://35.173.214.218:8000/api/pets/${id}/`)
+        .then(response => response.json())
+        .then(pet => {
+          document.getElementById('editPetId').value = pet.id;
+          document.getElementById('editPetName').value = pet.name;
+          document.getElementById('editPetType').value = pet.pet_type;
+          document.getElementById('editPetBreed').value = pet.breed;
+          document.getElementById('editPetAge').value = pet.age;
+          document.getElementById('editPetDesc').value = pet.description;
+          document.getElementById('editModal').style.display = 'flex';
+        });
+    }
+
+    // Close Modal
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    // Submit Edited Pet Info
+    document.getElementById('editPetForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const id = document.getElementById('editPetId').value;
+      const payload = {
+        name: document.getElementById('editPetName').value,
+        pet_type: document.getElementById('editPetType').value,
+        breed: document.getElementById('editPetBreed').value,
+        age: document.getElementById('editPetAge').value,
+        description: document.getElementById('editPetDesc').value
+      };
+
+      fetch(`http://35.173.214.218:8000/api/pets/${id}/`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error();
+        alert("Pet updated!");
+        closeEditModal();
+        document.getElementById('loadPetInfoBtn').click();
+        document.getElementById('loadPetInfoBtn').click();
+      })
+      .catch(() => alert("Failed to update pet."));
+    });
+
+    // Delete Pet
+    function deletePet(id) {
+      if (!confirm("Are you sure you want to delete this pet?")) return;
+      fetch(`http://35.173.214.218:8000/api/pets/${id}/`, {
+        method: 'DELETE'
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("Pet deleted.");
+          document.getElementById('loadPetInfoBtn').click();
+          document.getElementById('loadPetInfoBtn').click();
+        } else {
+          alert("Failed to delete pet.");
+        }
+      });
+    }
   </script>
 </body>
 </html>
