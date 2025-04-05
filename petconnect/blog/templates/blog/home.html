@@ -230,6 +230,14 @@
       alert('Menu clicked! You can add mobile nav functionality here.');
     });
 
+    weatherInfo.innerHTML = `
+  <div class="weather-card">
+    <h3>${emoji} Current Weather in Dublin</h3>
+    <p><strong>Temperature:</strong> ${temperature}°C</p>
+    <p>${suggestion}</p>
+  </div>
+`;
+
     // Weather Toggle & Fetching
     const weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=53.3498&longitude=-6.2603&current_weather=true";
     const weatherBtn = document.getElementById('weather-btn');
