@@ -225,23 +225,16 @@
   </div>
 
   <script>
+    // Weather Script Fix: Define elements before using
+    const weatherInfo = document.getElementById('weather-info');
+    const weatherBtn = document.getElementById('weather-btn');
+
     // Hamburger Alert
     document.getElementById('hamburger').addEventListener('click', () => {
       alert('Menu clicked! You can add mobile nav functionality here.');
     });
 
-    weatherInfo.innerHTML = `
-  <div class="weather-card">
-    <h3>${emoji} Current Weather in Dublin</h3>
-    <p><strong>Temperature:</strong> ${temperature}°C</p>
-    <p>${suggestion}</p>
-  </div>
-`;
-
-    // Weather Toggle & Fetching
     const weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=53.3498&longitude=-6.2603&current_weather=true";
-    const weatherBtn = document.getElementById('weather-btn');
-    const weatherInfo = document.getElementById('weather-info');
     let weatherVisible = false;
 
     function getWeatherSuggestion(code) {
@@ -321,7 +314,7 @@
         });
     });
 
-    // Edit Pet (opens modal with form filled)
+    // Edit Pet
     function editPet(id) {
       fetch(`http://35.173.214.218:8000/api/pets/${id}/`)
         .then(response => response.json())
@@ -336,12 +329,10 @@
         });
     }
 
-    // Close Modal
     function closeEditModal() {
       document.getElementById('editModal').style.display = 'none';
     }
 
-    // Submit Edited Pet Info
     document.getElementById('editPetForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const id = document.getElementById('editPetId').value;
