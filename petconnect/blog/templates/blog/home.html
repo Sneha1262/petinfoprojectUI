@@ -330,7 +330,7 @@
 
     // Edit Pet
     function editPet(id) {
-      fetch(`http://35.173.214.218:8000/api/pets/${id}/`)
+      fetch(`http://44.211.8.119:8000/api/pets/${id}/`)
         .then(response => response.json())
         .then(pet => {
           document.getElementById('editPetId').value = pet.id;
@@ -358,7 +358,7 @@
         description: document.getElementById('editPetDesc').value
       };
 
-      fetch(`http://35.173.214.218:8000/api/pets/${id}/`, {
+      fetch(`http://44.211.8.119:8000/api/pets/${id}/`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -376,7 +376,7 @@
     // Delete Pet
     function deletePet(id) {
       if (!confirm("Are you sure you want to delete this pet?")) return;
-      fetch(`http://35.173.214.218:8000/api/pets/${id}/`, {
+      fetch(`http://44.211.8.119:8000/api/pets/${id}/`, {
         method: 'DELETE'
       })
       .then(res => {
